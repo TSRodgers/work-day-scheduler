@@ -2,6 +2,8 @@ $("#currentDay").html(moment().format("dddd, MMMM Do"));
 
 var eventArr = {};
 
+var currentTime = moment().format("HH");
+
 $(".time-block").on("click", "p", function () {
   var text = $(this).text().trim();
 
@@ -30,15 +32,37 @@ $(".saveBtn").on("click", function (event) {
 });
 
 function loadEvents() {
-  $("#1 .description").text(localStorage.getItem("1"));
-  $("#2 .description").text(localStorage.getItem("2"));
-  $("#3 .description").text(localStorage.getItem("3"));
-  $("#4 .description").text(localStorage.getItem("4"));
-  $("#5 .description").text(localStorage.getItem("5"));
-  $("#6 .description").text(localStorage.getItem("6"));
-  $("#7 .description").text(localStorage.getItem("7"));
-  $("#8 .description").text(localStorage.getItem("8"));
-  $("#9 .description").text(localStorage.getItem("9"));
+  $("#09 .description").text(localStorage.getItem("09"));
+  $("#10 .description").text(localStorage.getItem("10"));
+  $("#11 .description").text(localStorage.getItem("11"));
+  $("#12 .description").text(localStorage.getItem("12"));
+  $("#13 .description").text(localStorage.getItem("13"));
+  $("#14 .description").text(localStorage.getItem("14"));
+  $("#15 .description").text(localStorage.getItem("15"));
+  $("#16 .description").text(localStorage.getItem("16"));
+  $("#17 .description").text(localStorage.getItem("17"));
+  auditEvents();
 }
+
+function auditEvents() {
+  $(".time-block").each(function () {
+    var eventTime = parseInt($(this).attr("id"));
+    $(this).children(".description").removeClass("past present future");
+    if (eventTime < currentTime) {
+      $(this).children(".description").addClass("past");
+      $(this).children(".description").removeClass("present future");
+    } else if (currentTime === eventTime) {
+      $(this).children(".description").addClass("present");
+      $(this).children(".description").removeClass("past future");
+    } else {
+      $(this).children(".description").addClass("future");
+      $(this).children(".description").removeClass("past present");
+    }
+  });
+}
+
+setInterval(function () {
+  auditEvents();
+}, 1000 * 120);
 
 loadEvents();
