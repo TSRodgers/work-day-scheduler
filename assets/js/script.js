@@ -21,13 +21,17 @@ $(".saveBtn").on("click", function (event) {
   } else {
     var text = $(this).prev().val();
     var taskP = $("<p>")
-      .addClass("col-9 border border-light p-3 text-input mr-0 p-0 description")
+      .addClass(
+        "col-9 border border-light text-input m-0 p-3 text-left description"
+      )
       .text(text);
     $(this).prev().replaceWith(taskP);
 
     var text = $(this).prev().text();
     var time = $(this).parent().attr("id");
     localStorage.setItem(time, text);
+
+    auditEvents();
   }
 });
 
